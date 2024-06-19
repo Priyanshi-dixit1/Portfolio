@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio-Priyanshi Dixit</title>
+    <link rel="stylesheet" href="intro.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
+
+</head>
+
+<body>
+    <nav>
+        <div class="logo">
+            <h1>Portfolio</h1>
+        </div>
+        <div class="openmenu"><i class='bx bx-menu'></i></div>
+        <ul class="mainmenu">
+            <li><a href="home.html" class="nav-link">Home</a></li>
+            <li><a href="about.html" class="nav-link">About</a></li>
+            <li><a href="resume.html" class="nav-link">Resume</a></li>
+            <li><a href="services.html" class="nav-link">Services</a></li>
+            <li><a href="projects.html" class="nav-link">Projects</a></li>
+            <li><a href="contact.html" class="nav-link">Contact</a></li>
+            <div class="closemenu"><i class='bx bx-x'></i></div>
+            <span class="icons">
+                <a href="https://www.instagram.com/priyanshi_dixiit_0110/"><i class='bx bxl-instagram'></i></a>
+                <a href="https://www.linkedin.com/in/priyanshi-dixit-134863282/"><i
+                        class='bx bxl-linkedin-square'></i></a>
+                <a href="https://github.com/Priyanshi-dixit1"><i class='bx bxl-github'></i></a>
+                <a href="https://x.com/PriyanshiD48066"><i class='bx bxl-twitter'></i></a>
+            </span>
+        </ul>
+    </nav>
+    <section id="contact">
+        <div class="contact-container">
+            <h2>Contact <span>Me</span></h2>
+            <form id="contactForm" onsubmit="exportToExcel(event)">
+                <div class="input-group">
+                    <input type="text" name="full_name" placeholder="Full Name" required>
+                    <input type="email" name="email_address" placeholder="Email Address" required>
+                </div>
+                <div class="input-group">
+                    <input type="text" name="mobile_number" placeholder="Mobile Number" required>
+                    <input type="text" name="email_subject" placeholder="Email Subject" required>
+                </div>
+                <textarea name="message" placeholder="Your Message" required></textarea>
+                <button type="submit">Send Message</button>
+            </form>
+            <div id="messageSent" class="message-sent" style="display: none;">
+                Message sent successfully!
+            </div>
+        </div>
+    </section>
+    <script src="index.js"></script>
+    <script>
+        function exportToExcel(event) {
+            event.preventDefault();
+
+
+            var form = document.getElementById('contactForm');
+            var fullName = form.elements['full_name'].value;
+            var emailAddress = form.elements['email_address'].value;
+            var mobileNumber = form.elements['mobile_number'].value;
+            var emailSubject = form.elements['email_subject'].value;
+            var message = form.elements['message'].value;
+
+
+            var wb = XLSX.utils.book_new();
+
+
+            var ws_data = [
+                ["Full Name", "Email Address", "Mobile Number", "Email Subject", "Message"],
+                [fullName, emailAddress, mobileNumber, emailSubject, message]
+            ];
+            var ws = XLSX.utils.aoa_to_sheet(ws_data);
+
+
+            XLSX.utils.book_append_sheet(wb, ws, "ContactData");
+
+
+            XLSX.writeFile(wb, 'ContactData.xlsx');
+            document.getElementById('messageSent').style.display = 'block';
+
+
+            form.reset();
+        }
+    </script>
+</body>
+
+</html>
